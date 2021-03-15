@@ -3,16 +3,16 @@
 // show a backlog of the equations performed
 
 function evaluate() {
-  let equation = '10*20'
+  let equation = '10/2'
   let result
 
-  while(equation !== '') {
+  while (equation.includes('*') || equation.includes('/') || equation.includes('+') || equation.includes('-')) {
     const getAdjacentNumbers = index => {
 
       const getNum1 = () => {
-        for(let i = index - 1; i >= 0; i--) {
-          if(i > 0) {
-            if(isNaN(parseInt(equation[i]))) {
+        for (let i = index - 1; i >= 0; i--) {
+          if (i > 0) {
+            if (isNaN(parseInt(equation[i]))) {
               return equation.slice(i + 1, index)
             }
           } else {
@@ -23,9 +23,9 @@ function evaluate() {
       const num1 = getNum1()
 
       const getNum2 = () => {
-        for(let i = index + 1; i < equation.length; i++) {
-          if(i < equation.length - 1) {
-            if(isNaN(parseInt(equation[i]))) {
+        for (let i = index + 1; i < equation.length; i++) {
+          if (i < equation.length - 1) {
+            if (isNaN(parseInt(equation[i]))) {
               return equation.slice(index, i)
             }
           } else {
@@ -38,19 +38,27 @@ function evaluate() {
       return { num1, num2 }
     }
 
-    for(let i = 0; i < equation.length; i++) {
-      if(equation[i] === '*') {
+    for (let i = 0; i < equation.length; i++) {
+      if (equation[i] === '*') {
         const { num1, num2 } = getAdjacentNumbers(i)
-        const result = num1 * num2
-        expression = `${num1}*${num2}`
+        const product = num1 * num2
+        result = product
 
-        equation = equation.replace(expression, '')
-        if(equation === '') {
-          return result
-        }
+        const expression = `${num1}*${num2}`
+        equation = equation.replace(expression, result)
+      } else if (equation[i] === '/') {
+        const { num1, num2 } = getAdjacentNumbers(i)
+
+        const quotient = num1 / num2
+        result = quotient
+      
+        const expression = `${num1}/${num2}`
+        equation = equation.replace(expression, result)
       }
     }
   }
+
+  return result
 }
 
 console.log(evaluate())
