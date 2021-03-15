@@ -3,7 +3,7 @@
 // show a backlog of the equations performed
 
 function evaluate() {
-  let equation = '5*5'
+  let equation = '10*1'
 
   while(equation !== '') {
     const getAdjacentNumbers = index => {
@@ -19,18 +19,28 @@ function evaluate() {
           }
         }
       }
+      const num1 = getNum1()
 
       const getNum2 = () => {
-
+        for(let i = index + 1; i < equation.length; i++) {
+          if(i < equation.length - 1) {
+            if(isNaN(parseInt(equation[i]))) {
+              return equation.slice(index, i)
+            }
+          } else {
+            return equation.slice(index + 1, i + 1)
+          }
+        }
       }
+      const num2 = getNum2()
 
-      const num1 = getNum1()
-      return { num1, num2: 0 }
+      return { num1, num2 }
     }
 
     for(let i = 0; i < equation.length; i++) {
       if(equation[i] === '*') {
         const { num1, num2 } = getAdjacentNumbers(i)
+        console.log(num1 * num2)
       }
     }
 
