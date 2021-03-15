@@ -3,7 +3,8 @@
 // show a backlog of the equations performed
 
 function evaluate() {
-  let equation = '10*1'
+  let equation = '10*20'
+  let result
 
   while(equation !== '') {
     const getAdjacentNumbers = index => {
@@ -40,12 +41,16 @@ function evaluate() {
     for(let i = 0; i < equation.length; i++) {
       if(equation[i] === '*') {
         const { num1, num2 } = getAdjacentNumbers(i)
-        console.log(num1 * num2)
+        const result = num1 * num2
+        expression = `${num1}*${num2}`
+
+        equation = equation.replace(expression, '')
+        if(equation === '') {
+          return result
+        }
       }
     }
-
-    equation = ''
   }
 }
 
-evaluate()
+console.log(evaluate())
