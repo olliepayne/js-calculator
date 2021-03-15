@@ -2,9 +2,9 @@
 
 const equationEl = document.getElementById('equation')
 
-function evaluate() {
+const slicedEquation = () => {
   // const equation = equationEl.innerText
-  const equation = '8+8x99-84+2'
+  const equation = '5+50'
 
   const numbers = []
   const operators = []
@@ -28,8 +28,39 @@ function evaluate() {
     }
   }
 
-  console.log(numbers)
-  console.log(operators)
+  // console.log(numbers)
+  // console.log(operators)
+
+  return { numbers, operators }
+}
+
+function evaluate() {
+  const { numbers, operators } = slicedEquation()
+
+  let operatorIndex = 0
+  let answer = 0
+
+  for(let i = 0; i < numbers.length; i += 2) {
+    switch(operators[operatorIndex]) {
+      case '+':
+        answer += numbers[i] + numbers[i + 1]
+      break
+
+      case '-':
+
+      break
+      
+      case '*':
+
+      break
+
+      case '/':
+
+      break
+    }
+  }
+
+  console.log(answer)
 }
 
 evaluate()
